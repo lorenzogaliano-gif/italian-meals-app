@@ -1,0 +1,40 @@
+{
+  "expo": {
+    "name": "Italian Meals App",
+    "slug": "italian-meals-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "resizeMode": "contain",
+      "backgroundColor": "#009246"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.student.italianmeals"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#009246"
+      },
+      "package": "com.student.italianmeals",
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "autoVerify": true,
+          "data": [
+            {
+              "scheme": "italianmeals",
+              "host": "*"
+            }
+          ],
+          "category": ["BROWSABLE", "DEFAULT"]
+        }
+      ]
+    },
+    "scheme": "italianmeals",
+    "plugins": []
+  }
+}
