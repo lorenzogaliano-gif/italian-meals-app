@@ -11,7 +11,7 @@ import {
   View,
 } from 'react-native';
 import { useAuth } from '../context/AuthContext';
-import { validateLogin } from '../services/auth';
+import { MOCK_USERS, validateLogin } from '../services/auth';
 import { Colors } from '../theme/colors';
 
 export function LoginScreen() {
@@ -60,7 +60,7 @@ export function LoginScreen() {
             style={[styles.input, error ? styles.inputError : null]}
             value={email}
             onChangeText={setEmail}
-            placeholder="federico.chiesa@juve.it"
+            placeholder="mario.rossi@student.it"
             placeholderTextColor={Colors.textSecondary}
             autoCapitalize="none"
             keyboardType="email-address"
@@ -106,9 +106,11 @@ export function LoginScreen() {
 
         <View style={styles.hint}>
           <Text style={styles.hintTitle}>Utenti di test:</Text>
-          <Text style={styles.hintText}>federico.chiesa@juve.it / Juve2026!</Text>
-          <Text style={styles.hintText}>dusan.vlahovic@juve.it / Juve2026!</Text>
-          <Text style={styles.hintText}>wojciech.szczesny@juve.it / Juve2026!</Text>
+          {MOCK_USERS.map((user) => (
+            <Text key={user.email} style={styles.hintText}>
+              {user.email} / {user.password}
+            </Text>
+          ))}
         </View>
       </ScrollView>
     </KeyboardAvoidingView>

@@ -1,11 +1,3 @@
-// storage/favoritesStorage.ts
-// Lab 16 - Persistenza locale con AsyncStorage
-//
-// Piccolo modulo wrapper: i componenti NON chiamano mai AsyncStorage
-// direttamente, parlano solo con load() / save() / reset().
-// I dati salvati sono trattati come input non affidabile: se il JSON
-// non e' valido o ha una shape inattesa, si fa un reset invece di
-// mandare in crash l'app.
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 

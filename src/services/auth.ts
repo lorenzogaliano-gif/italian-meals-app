@@ -1,22 +1,22 @@
 // services/auth.ts
 export const MOCK_USERS = [
   {
-    email: 'federico.chiesa@juve.it',
+    email: 'mario.rossi@student.it',
     password: 'Juve2026!',
-    name: 'Federico Chiesa',
-    avatarUri: 'https://ui-avatars.com/api/?name=Federico+Chiesa&background=ef4444&color=ffffff&size=128',
+    name: 'Mario Rossi',
+    avatarUri: 'https://ui-avatars.com/api/?name=Mario+Rossi&background=ef4444&color=ffffff&size=128',
   },
   {
-    email: 'dusan.vlahovic@juve.it',
+    email: 'giulia.bianchi@student.it',
     password: 'Juve2026!',
-    name: 'Dušan Vlahović',
-    avatarUri: 'https://ui-avatars.com/api/?name=Dušan+Vlahović&background=ef4444&color=ffffff&size=128',
+    name: 'Giulia Bianchi',
+    avatarUri: 'https://ui-avatars.com/api/?name=Giulia+Bianchi&background=ef4444&color=ffffff&size=128',
   },
   {
-    email: 'wojciech.szczesny@juve.it',
+    email: 'luca.verdi@student.it',
     password: 'Juve2026!',
-    name: 'Wojciech Szczęsny',
-    avatarUri: 'https://ui-avatars.com/api/?name=Wojciech+Szczęsny&background=ef4444&color=ffffff&size=128',
+    name: 'Luca Verdi',
+    avatarUri: 'https://ui-avatars.com/api/?name=Luca+Verdi&background=ef4444&color=ffffff&size=128',
   },
 ];
 
