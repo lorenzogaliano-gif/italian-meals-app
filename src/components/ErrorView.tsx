@@ -1,7 +1,8 @@
 // components/ErrorView.tsx
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { Colors } from '../theme/colors';
+import { Colors, spacing } from '../theme/colors';
+import { createSharedStyles } from '../theme/styles';
 
 interface ErrorViewProps {
   message?: string;
@@ -12,8 +13,10 @@ export function ErrorView({
   message = 'Errore di rete. Controlla la connessione.',
   onRetry,
 }: ErrorViewProps) {
+  const shared = createSharedStyles(Colors);
+
   return (
-    <View style={styles.container} accessibilityLabel={`Errore: ${message}`}>
+    <View style={shared.centered} accessibilityLabel={`Errore: ${message}`}>
       <Text style={styles.icon}>⚠️</Text>
       <Text style={styles.message}>{message}</Text>
       {onRetry && (
@@ -31,14 +34,6 @@ export function ErrorView({
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 24,
-    gap: 16,
-    backgroundColor: Colors.background,
-  },
   icon: { fontSize: 48 },
   message: {
     color: '#b91c1c',
@@ -48,20 +43,14 @@ const styles = StyleSheet.create({
     lineHeight: 24,
   },
   button: {
-    backgroundColor: '#fca5a5',
-    paddingHorizontal: 28,
-    paddingVertical: 12,
+    backgroundColor: Colors.primary,
+    paddingHorizontal: spacing.xl,
+    paddingVertical: spacing.md,
     borderRadius: 14,
-    borderWidth: 1,
-    borderColor: '#f87171',
-    marginTop: 10,
-    shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    shadowOffset: { width: 0, height: 4 },
+    marginTop: spacing.md,
   },
   buttonText: {
-    color: '#7f1d1d',
+    color: Colors.white,
     fontSize: 16,
     fontWeight: '700',
   },

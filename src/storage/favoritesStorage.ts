@@ -1,26 +1,16 @@
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-// Versioning della chiave: se in futuro cambia la shape dei dati,
-// basta incrementare v1 -> v2 per evitare di leggere dati vecchi incompatibili.
-const FAVORITES_KEY = 'italian-meals:favorites:v1';
+
+const FAVORITES_KEY = 'app:v1:favs';
 
 export type FavoriteIds = string[];
 
-/**
- * Verifica che il valore appena fatto il parse sia davvero un array
- * di stringhe (idMeal). Qualsiasi altra shape viene considerata corrotta.
- */
+
 function isValidFavorites(value: unknown): value is FavoriteIds {
   return Array.isArray(value) && value.every((item) => typeof item === 'string');
 }
-
-/**
- * Carica i preferiti dallo storage.
- * - Se la chiave non esiste ancora -> array vuoto (stato "nessun preferito").
- * - Se il JSON e' corrotto o ha una shape inattesa -> reset in sicurezza,
- *   nessun crash silenzioso.
- */
+  
 export async function load(): Promise<FavoriteIds> {
   try {
     const raw = await AsyncStorage.getItem(FAVORITES_KEY);

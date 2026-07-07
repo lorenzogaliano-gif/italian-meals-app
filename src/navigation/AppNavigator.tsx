@@ -4,10 +4,11 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Text } from 'react-native';
 
+import { useTheme } from '../context/ThemeContext';
 import { MealsListScreen } from '../screens/MealsListScreen';
 import { MealDetailScreen } from '../screens/MealDetailScreen';
 import { FavoritesScreen } from '../screens/FavoritesScreen';
-import { Colors } from '../theme/colors';
+import { SettingsScreen } from '../screens/SettingsScreen';
 
 export type AppStackParamList = {
   Tabs: undefined;
@@ -18,14 +19,16 @@ const Stack = createNativeStackNavigator<AppStackParamList>();
 const Tab = createBottomTabNavigator();
 
 function TabNavigator() {
+  const { theme } = useTheme();
+
   return (
     <Tab.Navigator
       screenOptions={{
-        headerStyle: { backgroundColor: Colors.green },
-        headerTintColor: Colors.white,
+        headerStyle: { backgroundColor: theme.primary },
+        headerTintColor: theme.white,
         headerTitleStyle: { fontWeight: '700' },
-        tabBarActiveTintColor: Colors.green,
-        tabBarInactiveTintColor: Colors.textSecondary,
+        tabBarActiveTintColor: theme.primary,
+        tabBarInactiveTintColor: theme.textSecondary,
       }}
     >
       <Tab.Screen
@@ -46,22 +49,37 @@ function TabNavigator() {
           tabBarIcon: ({ color }) => <Text style={{ fontSize: 20, color }}>❤️</Text>,
         }}
       />
+      <Tab.Screen
+        name="Settings"
+        component={SettingsScreen}
+        options={{
+          title: 'Impostazioni',
+          tabBarLabel: 'Impostazioni',
+          tabBarIcon: ({ color }) => <Text style={{ fontSize: 20, color }}>⚙️</Text>,
+        }}
+      />
     </Tab.Navigator>
   );
 }
 
 export function AppNavigator() {
+  const { theme } = useTheme();
+
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: theme.primary },
+        headerTintColor: theme.white,
+        headerTitleStyle: { fontWeight: '700' },
+      }}
+    >
       <Stack.Screen name="Tabs" component={TabNavigator} options={{ headerShown: false }} />
       <Stack.Screen
         name="MealDetail"
         component={MealDetailScreen}
         options={{
           title: 'Dettaglio Piatto',
-          headerStyle: { backgroundColor: Colors.green },
-          headerTintColor: Colors.white,
-          headerTitleStyle: { fontWeight: '700' },
+          headerBackTitleVisible: false,
         }}
       />
     </Stack.Navigator>

@@ -21,6 +21,7 @@ const linking: any = {
             screens: {
               MealsList: 'meals',
               Favorites: 'favorites',
+              Settings: 'settings',
             },
           },
           MealDetail: 'meal/:idMeal',
@@ -33,7 +34,11 @@ const linking: any = {
 const Stack = createNativeStackNavigator();
 
 export function RootNavigator() {
-  const { user } = useAuth();
+  const { user, isLoading } = useAuth();
+
+  if (isLoading) {
+    return null;
+  }
 
   return (
     <NavigationContainer linking={linking}>
@@ -47,7 +52,7 @@ export function RootNavigator() {
             options={{
               headerShown: true,
               title: 'Italian Meals 🇮🇹',
-              headerStyle: { backgroundColor: Colors.green },
+              headerStyle: { backgroundColor: Colors.primary },
               headerTintColor: Colors.white,
               headerTitleStyle: { fontWeight: '800' },
             }}

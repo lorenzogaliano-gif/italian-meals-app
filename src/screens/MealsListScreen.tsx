@@ -8,6 +8,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  useWindowDimensions,
   View,
 } from 'react-native';
 import { useAuth } from '../context/AuthContext';
@@ -22,13 +23,19 @@ import { MealCard } from '../components/MealCard';
 import { LoadingView } from '../components/LoadingView';
 import { ErrorView } from '../components/ErrorView';
 import { Avatar } from '../components/Avatar';
-import { Colors } from '../theme/colors';
+import { Colors, spacing } from '../theme/colors';
+import { createSharedStyles } from '../theme/styles';
+import { useTheme } from '../context/ThemeContext';
 
 type Status = 'idle' | 'loading' | 'error' | 'success';
 
 export function MealsListScreen({ navigation }: any) {
   const { user, logout } = useAuth();
   const { favorites, isLoading: isStorageLoading } = useFavorites();
+  const { theme, isDark, toggleTheme } = useTheme();
+  const { width } = useWindowDimensions();
+  const isWide = width >= 600;
+  const shared = createSharedStyles(theme);
 
   const [state, setState] = useState<{ status: Status; items: MealSummary[] }>({
     status: 'idle',
@@ -89,6 +96,8 @@ export function MealsListScreen({ navigation }: any) {
     item.strMeal.toLowerCase().includes(query.toLowerCase()),
   );
 
+  const listKey = isWide ? 'wide-grid' : 'stack-list';
+
   const handleLogout = () => {
     logout();
     setMenuVisible(false);
@@ -100,10 +109,15 @@ export function MealsListScreen({ navigation }: any) {
     return <ErrorView onRetry={load} message="Impossibile caricare i piatti Italiani." />;
 
   if (state.status === 'success' && state.items.length === 0)
-    return <View style={styles.emptyContainer}><Text style={styles.emptyText}>Nessun risultato</Text></View>;
+    return (
+      <View style={shared.emptyState}>
+        <Text style={shared.emptyTitle}>Nessun piatto trovato</Text>
+        <Text style={shared.emptySubtitle}>Prova a cambiare la ricerca oppure riprova più tardi.</Text>
+      </View>
+    );
 
   return (
-    <View style={styles.container}>
+    <View style={shared.screen}>
       <View style={styles.header}>
         <Pressable
           style={styles.userButton}
@@ -111,33 +125,48 @@ export function MealsListScreen({ navigation }: any) {
           accessibilityLabel="Apri il menu utente"
           accessibilityRole="button"
         >
-          <Avatar uri={user?.avatarUri ?? ''} />
+          <Avatar uri={user?.avatarUri ?? ''} name={user?.name} />
           <View style={styles.userText}>
-            <Text style={styles.welcomeText}>Ciao, {user?.name}</Text>
-            <Text style={styles.userHint}>Apri il menu</Text>
+            <Text style={[styles.welcomeText, { color: theme.textPrimary }]}>Ciao, {user?.name}</Text>
+            <Text style={[styles.userHint, { color: theme.textSecondary }]}>Apri il menu</Text>
           </View>
+        </Pressable>
+        <Pressable
+          style={[styles.themeButton, { backgroundColor: theme.primary }]}
+          onPress={toggleTheme}
+          accessibilityLabel={isDark ? 'Attiva modalità chiara' : 'Attiva modalità scura'}
+          accessibilityRole="button"
+        >
+          <Text style={[styles.themeButtonText, { color: theme.white }]}>
+            {isDark ? '☀️ Chiaro' : '🌙 Scuro'}
+          </Text>
         </Pressable>
       </View>
 
       <TextInput
-        style={styles.search}
+        style={[styles.search, { backgroundColor: theme.inputBackground, borderColor: theme.primary }]}
         placeholder="Cerca piatti..."
-        placeholderTextColor={Colors.textSecondary}
+        placeholderTextColor={theme.textSecondary}
         value={query}
         onChangeText={setQuery}
         accessibilityLabel="Cerca piatti"
       />
 
       <FlatList
+        key={listKey}
         data={filtered}
         keyExtractor={(item) => item.idMeal}
+        numColumns={isWide ? 2 : 1}
+        columnWrapperStyle={isWide ? shared.columnWrapper : undefined}
         renderItem={({ item }) => (
-          <MealCard
-            meal={item}
-            onPress={() => navigation.navigate('MealDetail', { idMeal: item.idMeal })}
-          />
+          <View style={isWide ? shared.gridItem : undefined}>
+            <MealCard
+              meal={item}
+              onPress={() => navigation.navigate('MealDetail', { idMeal: item.idMeal })}
+            />
+          </View>
         )}
-        contentContainerStyle={styles.listContent}
+        contentContainerStyle={shared.flatListContent}
       />
 
       <Modal
@@ -148,7 +177,7 @@ export function MealsListScreen({ navigation }: any) {
       >
         <Pressable style={styles.overlay} onPress={() => setMenuVisible(false)}>
           <Pressable
-            style={styles.menuCard}
+            style={[styles.menuCard, { backgroundColor: theme.surface, borderColor: theme.primary }]}
             onPress={(event) => event.stopPropagation()}
             accessibilityRole="menu"
           >
@@ -159,28 +188,28 @@ export function MealsListScreen({ navigation }: any) {
                 accessibilityLabel="Chiudi menu utente"
                 accessibilityRole="button"
               >
-                <Text style={styles.closeText}>✕</Text>
+                <Text style={[styles.closeText, { color: theme.textPrimary }]}>✕</Text>
               </Pressable>
             </View>
 
-            <Text style={styles.menuSubtitle}>Preferiti</Text>
+            <Text style={[styles.menuSubtitle, { color: theme.textSecondary }]}>Preferiti</Text>
 
             {isStorageLoading || isFetchingFavorites ? (
-              <Text style={styles.emptyText}>Caricamento preferiti...</Text>
+              <Text style={[styles.emptyText, { color: theme.textPrimary }]}>Caricamento preferiti...</Text>
             ) : favoriteMeals.length === 0 ? (
-              <Text style={styles.emptyText}>Nessun piatto preferito</Text>
+              <Text style={[styles.emptyText, { color: theme.textPrimary }]}>Nessun piatto preferito</Text>
             ) : (
               <ScrollView style={styles.favoriteList} contentContainerStyle={styles.favoriteListContent}>
                 {favoriteMeals.map((meal) => (
                   <View key={meal.idMeal} style={styles.favoriteItem}>
-                    <Text style={styles.favoriteText}>❤️ {meal.strMeal}</Text>
+                    <Text style={[styles.favoriteText, { color: theme.textPrimary }]}>❤️ {meal.strMeal}</Text>
                   </View>
                 ))}
               </ScrollView>
             )}
 
-            <Pressable style={styles.logoutButton} onPress={handleLogout} accessibilityRole="button">
-              <Text style={styles.logoutText}>Esci</Text>
+            <Pressable style={[styles.logoutButton, { backgroundColor: theme.primary }]} onPress={handleLogout} accessibilityRole="button">
+              <Text style={[styles.logoutText, { color: theme.white }]}>Esci</Text>
             </Pressable>
           </Pressable>
         </Pressable>
@@ -190,66 +219,57 @@ export function MealsListScreen({ navigation }: any) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff5f5',
-  },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 14,
+    justifyContent: 'space-between',
+    padding: spacing.lg,
   },
   userButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 10,
+    gap: spacing.sm,
   },
   userText: {
     flexShrink: 1,
   },
+  themeButton: {
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.sm,
+    borderRadius: 999,
+  },
+  themeButtonText: {
+    fontSize: 13,
+    fontWeight: '700',
+  },
   welcomeText: {
     fontSize: 16,
-    color: Colors.textPrimary,
+    fontWeight: '600',
   },
   userHint: {
     fontSize: 12,
-    color: Colors.textSecondary,
     marginTop: 2,
   },
   search: {
-    margin: 12,
-    padding: 10,
-    borderRadius: 0,
-    backgroundColor: '#ffffff',
+    margin: spacing.md,
+    padding: spacing.sm,
+    borderRadius: 12,
     borderWidth: 2,
-    borderColor: Colors.green,
     color: Colors.textPrimary,
   },
-  listContent: {
-    paddingBottom: 12,
-  },
-  emptyContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 12,
-  },
   emptyText: {
-    color: Colors.textSecondary,
     fontSize: 15,
   },
   overlay: {
     flex: 1,
     backgroundColor: 'rgba(15, 23, 42, 0.35)',
     justifyContent: 'center',
-    padding: 20,
+    padding: spacing.lg,
   },
   menuCard: {
-    backgroundColor: '#fff5f5',
     borderWidth: 2,
-    borderColor: Colors.green,
-    padding: 16,
-    gap: 12,
+    padding: spacing.lg,
+    gap: spacing.md,
   },
   menuHeader: {
     flexDirection: 'row',
@@ -259,37 +279,32 @@ const styles = StyleSheet.create({
   menuTitle: {
     fontSize: 17,
     fontWeight: '700',
-    color: Colors.textPrimary,
   },
   menuSubtitle: {
     fontSize: 14,
-    color: Colors.textSecondary,
   },
   closeText: {
     fontSize: 18,
-    color: Colors.textPrimary,
   },
   favoriteList: {
     maxHeight: 220,
   },
   favoriteListContent: {
-    gap: 8,
+    gap: spacing.sm,
   },
   favoriteItem: {
-    paddingVertical: 6,
+    paddingVertical: spacing.xs,
   },
   favoriteText: {
-    color: Colors.textPrimary,
     fontSize: 14,
   },
   logoutButton: {
-    backgroundColor: Colors.green,
-    paddingVertical: 10,
+    paddingVertical: spacing.sm,
     alignItems: 'center',
-    marginTop: 4,
+    marginTop: spacing.xs,
+    borderRadius: 12,
   },
   logoutText: {
-    color: Colors.white,
     fontSize: 15,
     fontWeight: '600',
   },
