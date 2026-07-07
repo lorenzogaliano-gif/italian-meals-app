@@ -1,7 +1,7 @@
 # Progress - Italian Meals App
 
 **Studente:** Lorenzo Galiano  
-**Repo:** https://github.com/lorenzogaliano/italian-meals-app  
+**Repo:** https://github.com/lorenzogaliano-gif/italian-meals-app.git
 **Ultimo aggiornamento:** 2026-07-07
 
 ---
@@ -10,22 +10,20 @@
 
 | Schermata | Stato | Screenshot |
 | --- | --- | --- |
-| Login | ✅ | ![Login](./docs/screenshots/01-login.png) |
-| Header profilo | ✅ | ![Profilo](./docs/screenshots/02-profile.png) |
-| Lista piatti | ✅ | ![Lista](./docs/screenshots/03-list.png) |
-| Ricerca / filtro | ✅ | ![Ricerca](./docs/screenshots/04-search.png) |
-| Dettaglio | ✅ | ![Dettaglio](./docs/screenshots/05-detail.png) |
-| Preferiti | ✅ | ![Preferiti](./docs/screenshots/06-favorites.png) |
-| Impostazioni | ✅ | ![Impostazioni](./docs/screenshots/07-settings.png) |
-| Errore + Retry | ✅ | ![Errore](./docs/screenshots/08-error.png) |
-| Accessibilità | ✅ | ![Accessibilità](./docs/screenshots/09-accessibility.png) |
-| Deep link | ✅ | ![Deep link](./docs/screenshots/10-deeplink.png) |
+| Login | ✅ | ![Login](./docs/screenshots/login.png) |
+| Header profilo | ✅ | ![Profilo](./docs/screenshots/utente.png) |
+| Lista piatti | ✅ | ![Lista](./docs/screenshots/listapiatti.png) |
+| Ricerca / filtro | ✅ | ![Ricerca](./docs/screenshots/ricerca.png) |
+| Dettaglio | ✅ | ![Dettaglio](./docs/screenshots/dettagli.png) |
+| Preferiti | ✅ | ![Preferiti](./docs/screenshots/preferiti.png) |
+| Impostazioni | ✅ | ![Impostazioni](./docs/screenshots/impostazioni.png) |
+
 
 ---
 
 ## Google Doc (lab 13–22)
 
-**Link:** https://docs.google.com/document/d/1RXdJJVh4GlMYAngYksM9MLcUvdgkYoO3lizdgMCK36Y/edit?tab=t.0#heading=h.wu29v8o1b6lm
+**Link:**https://docs.google.com/document/d/1RXdJJVh4GlMYAngYksM9MLcUvdgkYoO3lizdgMCK36Y/edit?tab=t.0#heading=h.wu29v8o1b6lm
 
 ---
 
