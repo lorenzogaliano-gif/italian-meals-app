@@ -27,6 +27,25 @@
 
 ---
 
+## Checklist completo
+- Repository su GitHub: https://github.com/lorenzogaliano-gif/italian-meals-app.git
+- App avvia con `npx expo start`
+- Login funziona con i 3 utenti mock
+- Dopo login: avatar rotondo + nome utente visibili
+- Lista piatti da API italiana con stati loading/error/success
+- Dettaglio con `lookup.php?i=`
+- Ricerca sulla lista
+- Preferiti in AsyncStorage (`app:v1:favs`)
+- Navigazione Lista → Dettaglio → Impostazioni + logout
+- Deep linking con URL `italianmeals://meal/:idMeal`
+- Retry su errore API
+- Stato globale con Context API per sessione e preferiti
+- Almeno 2 accorgimenti accessibilità
+- File `PROGRESS.md` con tutti gli screenshot richiesti
+- Google Doc con screenshot lab 13–22 e link presente in questo file
+
+---
+
 ## Feature implementate per lab
 
 | Lab | Funzione nell'app |

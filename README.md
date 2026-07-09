@@ -2,6 +2,24 @@
 
 Applicazione Expo/React Native per esplorare piatti italiani da TheMealDB, con login mock, navigazione, preferiti persistiti e deep link.
 
+## Repository GitHub
+- Repository: https://github.com/lorenzogaliano-gif/italian-meals-app.git
+
+## Checklist implementato
+- App avvia con `npx expo start`
+- Login funziona con i 3 utenti mock
+- Dopo il login: avatar rotondo e nome utente visibili
+- Lista piatti da API italiana con stati loading/error/success
+- Dettaglio con `lookup.php?i=`
+- Ricerca sulla lista
+- Preferiti in AsyncStorage con chiave `app:v1:favs`
+- Navigazione Lista → Dettaglio → Impostazioni + logout
+- Deep linking con URL `italianmeals://meal/:idMeal`
+- Retry su errore API
+- Stato globale con Context API per sessione e preferiti
+- Accessibilità con `accessibilityLabel` e `accessibilityRole`
+- File `PROGRESS.md` con screenshot e link al Google Doc
+
 ## Autore
 - Lorenzo Galiano
 
